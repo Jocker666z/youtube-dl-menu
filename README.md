@@ -14,3 +14,4 @@ It shows the different qualities available to the user, and allows to make the c
 ## Limitations:
 * One file at a time
 * Playlists are not supported
+* No audio only
