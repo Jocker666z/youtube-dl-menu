@@ -11,6 +11,10 @@ It shows the different qualities available to the user, and allows to make the c
 ## Dependencies
 `bc jq youtube-dl`
 
+## Use
+In terminal:
+`youtube-dl-menu "link"`
+
 ## Limitations:
 * One file at a time
 * Playlists are not supported
