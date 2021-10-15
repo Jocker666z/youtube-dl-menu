@@ -6,8 +6,28 @@
 #
 # licence : GNU GPL-2.0
 
+# Variables Stuff
+export PATH=$PATH:/home/$USER/.local/bin
 link="$1"
 json="/tmp/youtube-dl-menu-$(date +%Y%m%s%N).json"
+
+# Command Stuff
+check_bin() {
+local yt_dlp_bin_location
+local yt_dl_bin_location
+
+yt_dlp_bin_location=$(command -v yt-dlp)
+yt_dl_bin_location=$(command -v youtube-dl)
+
+if [[ -n "$yt_dlp_bin_location" ]]; then
+	youtube_dl_bin="$yt_dlp_bin_location"
+elif [[ -n "$yt_dl_bin_location" ]] && [[ -z "$youtube_dl_bin" ]]; then
+	youtube_dl_bin="$yt_dl_bin_location"
+else
+	echo "Break, youtube-dl or yt-dlp is not installed"
+	exit
+fi
+}
 
 # Tools stuff
 calc_size_in_mb() {
@@ -285,6 +305,7 @@ else
 
 	if [[ "$link" == "http"* ]]; then
 
+		check_bin
 		playlist_detect
 
 		if [ -z "$playlist" ]; then
@@ -301,13 +322,13 @@ else
 				print_video_question
 				print_audio_list
 				print_audio_question
-				youtube-dl --geo-bypass --no-warnings -f "$video_stream"+"$audio_stream" "$link"
+				"$youtube_dl_bin" --geo-bypass --no-warnings -f "$video_stream"+"$audio_stream" "$link"
 
 			# Other
 			else
 				print_video_audio_list
 				print_video_audio_question
-				youtube-dl --geo-bypass --no-warnings -f "$video_audio_stream" "$link"
+				"$youtube_dl_bin" --geo-bypass --no-warnings -f "$video_audio_stream" "$link"
 
 			fi
 
