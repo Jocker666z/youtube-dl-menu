@@ -96,7 +96,7 @@ playlist=$(echo "$link" | grep "list=")
 
 # Json / bash array stuff
 extract_info_all() {
-youtube-dl --geo-bypass --quiet -j "$link" | jq -r > "$json"
+"$youtube_dl_bin" --geo-bypass --quiet -j "$link" | jq -r > "$json"
 mapfile -t ydl_code < <(jq -r ".formats[].format_id" "$json")
 mapfile -t ydl_extension < <(jq -r ".formats[].ext" "$json")
 mapfile -t ydl_vcodec < <(jq -r ".formats[].vcodec" "$json" | cut -f1 -d".")
